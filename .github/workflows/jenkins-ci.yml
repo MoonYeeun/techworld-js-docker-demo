@@ -28,7 +28,10 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
-        
+
+      - name: Create scmfile.yaml
+        run: cat > ../../scmfile.yaml
+
       - name: Replace scmfile.yaml With Custom Value
         uses: microsoft/variable-substitution@v1
         with:
