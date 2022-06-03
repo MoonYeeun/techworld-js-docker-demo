@@ -30,18 +30,23 @@ jobs:
         run: echo Hello, world!
 
       - name: Create scmfile.yaml
-        run: 
-          echo Hello World!! > scmlfile.yaml
+        run: |
+          touch scmfile.yaml
+          echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
+          echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
+          echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
+          echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
+          cat scmfile.yaml
 
-      - name: Replace scmfile.yaml With Custom Value
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: scmfile.yaml
-        env:
-          credential.usernamePassword.password: ${{ secrets.GITHUB_TOKEN }}
-          credential.usernamePassword.username: ${{ github.actor }}
-          scm.git.userRemoteConfig.url: ${{ github.repositoryUrl }}
-          scm.git.branches.name: ${{ github.ref_name }}
+      # - name: Replace scmfile.yaml With Custom Value
+      #   uses: microsoft/variable-substitution@v1
+      #   with:
+      #     files: scmfile.yaml
+      #   env:
+      #     credential.usernamePassword.password: ${{ secrets.GITHUB_TOKEN }}
+      #     credential.usernamePassword.username: ${{ github.actor }}
+      #     scm.git.userRemoteConfig.url: ${{ github.repositoryUrl }}
+      #     scm.git.branches.name: ${{ github.ref_name }}
 
       # Runs a set of commands using the runners shell
       - name: custom runnger github action
