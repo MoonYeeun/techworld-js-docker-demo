@@ -31,8 +31,7 @@ jobs:
 
       - name: Create scmfile.yaml
         run: 
-          cat > scmfile.yaml
-          hihi
+          echo print('Hello World!!') > scmlfile.yaml
 
       - name: Replace scmfile.yaml With Custom Value
         uses: microsoft/variable-substitution@v1
