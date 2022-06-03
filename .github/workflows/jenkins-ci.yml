@@ -30,8 +30,9 @@ jobs:
         run: echo Hello, world!
 
       - name: Create scmfile.yaml
-        run: cat > scmfile.yaml
-        hihi
+        run: 
+          cat > scmfile.yaml
+          hihi
 
       - name: Replace scmfile.yaml With Custom Value
         uses: microsoft/variable-substitution@v1
