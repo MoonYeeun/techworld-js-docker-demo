@@ -35,16 +35,16 @@ jobs:
       - name: Create scmfile.yaml
         run: |
           touch scmfile.yaml
-          if [ ${credential.usernamePassword.password} -eq '' ]; then 
+          if [ $credential.usernamePassword.password -eq '' ]; then 
             echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
           fi
-          if [ ${credential.usernamePassword.username} -eq '' ]; then 
+          if [ $credential.usernamePassword.username -eq '' ]; then 
             echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
           fi
-          if [ ${scm.git.userRemoteConfig.url} -eq '' ]; then 
+          if [ $scm.git.userRemoteConfig.url -eq '' ]; then 
             echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
           fi
-          if [ ${scm.git.branches.name} -eq '' ]; then 
+          if [ $scm.git.branches.name -eq '' ]; then 
             echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
           fi
           cat scmfile.yaml
