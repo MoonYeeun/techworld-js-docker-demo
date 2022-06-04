@@ -51,8 +51,9 @@ jobs:
 
       - name: Create scmfile.yaml
         run: |
-          touch scmfile.yaml
-          echo yq '.credential.usernamePassword.password' scmfile.yaml == ""
+
+          pw=$(yq '.credential.usernamePassword.password' scmfile.yaml)
+          echo pw
           if [ yq '.credential.usernamePassword.password' scmfile.yaml == "" ]
           then
             echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
