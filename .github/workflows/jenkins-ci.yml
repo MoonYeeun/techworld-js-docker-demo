@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [spirit]
+    branches: [master]
   pull_request:
-    branches: [spirit]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,41 +25,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # - name: Check file existence
-      #   id: check_files
-      #   uses: andstor/file-existence-action@v1
-      #   with:
-      #     files: "scmfile.yaml"
-
-      # # scmfile 이 존재하는 경우 읽기
-      # # - name: Read scmfile
-      # #   if: steps.check_files.outputs.files_exists == 'true'
-      # #   id: scmfile
-      # #   uses: juliangruber/read-file-action@v1
-      # #   with:
-      # #     path: scmfile.yaml
-
-      # - name: Run read-yaml action
-      #   id: yaml-data
-      #   uses: KJ002/read-yaml@main      # You may wish to replace main with a version tag such as '1.6' etc.
-      #   with:
-      #     file: './scmfile.yaml'          # File to read from
-      #     key-path: '["runs"]' # Access the runs key then the using key and retuns the value.
-
-      # - name: Echo scmfile
-      #   run: echo "${{ steps.yaml-data.outputs.data }}"
-
       - name: Create scmfile.yaml
         run: |
           touch scmfile.yaml
+
           password=$(yq '.credential.usernamePassword.password' scmfile.yaml) 
-
           username=$(yq '.credential.usernamePassword.username' scmfile.yaml) 
-
           url=$(yq '.scm.git.userRemoteConfig.url' scmfile.yaml) 
-
           branchName=$(yq '.scm.git.branches.name' scmfile.yaml) 
-
 
           if [ $password = "null" ]
           then
