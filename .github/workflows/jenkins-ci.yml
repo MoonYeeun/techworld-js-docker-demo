@@ -25,21 +25,24 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # # scmfile 이 존재하는 경우 읽기
+      # scmfile 이 존재하는 경우 읽기
       # - name: Read scmfile
       #   id: scmfile
       #   uses: juliangruber/read-file-action@v1
       #   with:
-      #     path: ./scmfile.yaml
+      #     path: scmfile.yaml
 
       - name: Create scmfile.yaml
         run: |
-          cat scmfile.yaml
           touch scmfile.yaml
-          echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
-          echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
-          echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
-          echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
+          if ${{ !credential.usernamePassword.password }}; then 
+            echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
+          if ${{ !credential.usernamePassword.username }}; then 
+            echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
+          if ${{ !scm.git.userRemoteConfig.url }}; then 
+            echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
+          if ${{ !scm.git.branches.name }}; then 
+            echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
           cat scmfile.yaml
 
       # - name: Replace scmfile.yaml With Custom Value
