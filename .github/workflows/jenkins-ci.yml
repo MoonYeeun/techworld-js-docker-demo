@@ -54,20 +54,20 @@ jobs:
 
           pw=$(yq '.credential.usernamePassword.password' scmfile.yaml)
           echo $pw
-          if [ $pw == "" ]
+          if [ $pw = "" ]
           then
             echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
             echo credential.usernamePassword.password 
           fi
-          if [ $credential_usernamePassword_username == "" ]
+          if [ $credential_usernamePassword_username = "" ]
           then 
             echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
           fi
-          if [ $scm_git_userRemoteConfig_url == "" ]
+          if [ $scm_git_userRemoteConfig_url = "" ]
           then 
             echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
           fi
-          if [ $scm_git_branches_name == "" ]
+          if [ $scm_git_branches_name = "" ]
           then 
             echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
           fi
