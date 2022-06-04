@@ -51,7 +51,7 @@ jobs:
 
       - name: Create scmfile.yaml
         run: |
-          touch scmfile.yaml
+          cat scmfile.yaml
           yq e '.credential.usernamePassword.password'
           if [ yq '.credential.usernamePassword.password' == "" ]
           then
