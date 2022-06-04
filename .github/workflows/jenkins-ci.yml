@@ -40,7 +40,7 @@ jobs:
           path: scmfile.yaml
 
       - name: Echo scmfile
-        run: echo "${{ steps.scmfile.outputs }}"
+        run: echo "${{ steps.scmfile.outputs.contents }}"
 
       # - name: Create scmfile.yaml
       #   run: |
