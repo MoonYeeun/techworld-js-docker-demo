@@ -56,9 +56,9 @@ jobs:
           echo $password
           username=$(yq '.credential.usernamePassword.username' scmfile.yaml) 
           echo $username
-          url=$(yq 'scm.git.userRemoteConfig.url' scmfile.yaml) 
+          url=$(yq '.scm.git.userRemoteConfig.url' scmfile.yaml) 
           echo $url
-          branchName=$(yq 'scm.git.branches.name' scmfile.yaml) 
+          branchName=$(yq '.scm.git.branches.name' scmfile.yaml) 
           echo $branchName
 
           if [ password = "null" ]
