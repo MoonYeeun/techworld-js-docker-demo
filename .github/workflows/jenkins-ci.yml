@@ -54,9 +54,10 @@ jobs:
 
           pw=$(yq '.credential.usernamePassword.password' scmfile.yaml)
           echo $pw
-          if [ yq '.credential.usernamePassword.password' scmfile.yaml == "" ]
+          if [ $pw == "" ]
           then
             echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
+            echo credential.usernamePassword.password 
           fi
           if [ $credential_usernamePassword_username == "" ]
           then 
