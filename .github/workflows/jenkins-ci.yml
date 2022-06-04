@@ -25,14 +25,21 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # scmfile 이 존재하는 경우 읽기
+      - name: Read scmfile
+        id: scmfile
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./scmfile.yaml
 
       - name: Create scmfile.yaml
+        if: ${{ !steps.scmfile.outputs }} || 
+          ${{ !steps.scmfile.outputs.credential.usernamePassword.password }} ||
+          ${{ !steps.scmfile.outputs.credential.usernamePassword.username }} ||
+          ${{ !steps.scmfile.outputs.redential.usernamePassword.password }} ||
+          ${{ !steps.scmfile.outputs.scm.git.userRemoteConfig.url }} ||
+          ${{ !steps.scmfile.outputs.scm.git.branches.name }}
         run: |
-          cat ./scmfile.yaml
-          stat scmfile.yaml
           touch scmfile.yaml
           echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
           echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
