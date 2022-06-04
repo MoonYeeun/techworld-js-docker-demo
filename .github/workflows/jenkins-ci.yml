@@ -47,7 +47,7 @@ jobs:
           key-path: '["runs"]' # Access the runs key then the using key and retuns the value.
 
       - name: Echo scmfile
-        run: echo "${{ steps.yaml-data.outputs.credential_usernamePassword_password }}"
+        run: echo "${{ steps.yaml-data.outputs.credential.usernamePassword.password }}"
 
       # - name: Create scmfile.yaml
       #   run: |
