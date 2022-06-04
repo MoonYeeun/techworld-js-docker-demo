@@ -31,7 +31,8 @@ jobs:
 
       - name: Create scmfile.yaml
         run: |
-          cat scmfile.yaml
+          cat ./scmfile.yaml
+          stat scmfile.yaml
           touch scmfile.yaml
           echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
           echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
