@@ -25,13 +25,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # scmfile 이 존재하는 경우 읽기
-      # - name: Read scmfile
-      #   id: scmfile
-      #   uses: juliangruber/read-file-action@v1
-      #   with:
-      #     path: scmfile.yaml
-
       - name: Create scmfile.yaml
         run: |
           touch scmfile.yaml
