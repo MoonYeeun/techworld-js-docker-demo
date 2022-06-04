@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ spirit ]
+    branches: [spirit]
   pull_request:
-    branches: [ spirit ]
+    branches: [spirit]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -52,8 +52,8 @@ jobs:
       - name: Create scmfile.yaml
         run: |
           touch scmfile.yaml
-          yq '.credential.usernamePassword.password' scmfile.yaml
-          if [ yq '.credential.usernamePassword.password' == "" ]
+          echo yq '.credential.usernamePassword.password' scmfile.yaml == ""
+          if [ yq '.credential.usernamePassword.password' scmfile.yaml == "" ]
           then
             echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
           fi
@@ -88,4 +88,3 @@ jobs:
       #     jenkinsfile: ../../Jenkinsfile
       #     plugins: ../../plugins.txt
       #     scmfile: ./scmfile.yaml
-          
