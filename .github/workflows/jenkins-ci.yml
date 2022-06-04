@@ -25,26 +25,37 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Create scmfile.yaml
-        run: |
-          touch scmfile.yaml
-          if [ $credential_usernamePassword_password == "" ]
-          then
-            echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
-          fi
-          if [ $credential_usernamePassword_username == "" ]
-          then 
-            echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
-          fi
-          if [ $scm_git_userRemoteConfig_url == "" ]
-          then 
-            echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
-          fi
-          if [ $scm_git_branches_name == "" ]
-          then 
-            echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
-          fi
-          cat scmfile.yaml
+      # scmfile 이 존재하는 경우 읽기
+      - name: Read scmfile
+        id: scmfile
+        uses: juliangruber/read-file-action@v1
+        if: [ -e $scmfile.yaml ]
+        with:
+          path: scmfile.yaml
+
+      - name: Echo scmfile
+        run: echo "${{ steps.scmfile.outputs }}"
+
+      # - name: Create scmfile.yaml
+      #   run: |
+      #     touch scmfile.yaml
+      #     if [ $credential_usernamePassword_password == "" ]
+      #     then
+      #       echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
+      #     fi
+      #     if [ $credential_usernamePassword_username == "" ]
+      #     then 
+      #       echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
+      #     fi
+      #     if [ $scm_git_userRemoteConfig_url == "" ]
+      #     then 
+      #       echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
+      #     fi
+      #     if [ $scm_git_branches_name == "" ]
+      #     then 
+      #       echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
+      #     fi
+      #     cat scmfile.yaml
 
       # - name: Replace scmfile.yaml With Custom Value
       #   uses: microsoft/variable-substitution@v1
