@@ -61,22 +61,22 @@ jobs:
           branchName=$(yq '.scm.git.branches.name' scmfile.yaml) 
 
 
-          if [ password = "null" ]
+          if [ $password = "null" ]
           then
             echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
           fi
           cat scmfile.yaml
-          if [ username = "null" ]
+          if [ $username = "null" ]
           then 
             echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
           fi
           cat scmfile.yaml
-          if [ url = "null" ]
+          if [ $url = "null" ]
           then 
             echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
           fi
           cat scmfile.yaml
-          if [ branchname = "null" ]
+          if [ $branchname = "null" ]
           then 
             echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
           fi
