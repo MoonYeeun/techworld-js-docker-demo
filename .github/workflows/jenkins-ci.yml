@@ -51,15 +51,15 @@ jobs:
 
       - name: Create scmfile.yaml
         run: |
-
+          touch scmfile.yaml
           password=$(yq '.credential.usernamePassword.password' scmfile.yaml) 
-          echo $password
+
           username=$(yq '.credential.usernamePassword.username' scmfile.yaml) 
-          echo $username
+
           url=$(yq '.scm.git.userRemoteConfig.url' scmfile.yaml) 
-          echo $url
+
           branchName=$(yq '.scm.git.branches.name' scmfile.yaml) 
-          echo $branchName
+
 
           if [ password = "null" ]
           then
