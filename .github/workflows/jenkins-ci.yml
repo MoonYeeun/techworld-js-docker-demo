@@ -28,6 +28,7 @@ jobs:
       - name: Create scmfile.yaml
         run: |
           touch scmfile.yaml
+          echo shyaml get-value credential.usernamePassword.password
 
           password=$(yq '.credential.usernamePassword.password' scmfile.yaml) 
           username=$(yq '.credential.usernamePassword.username' scmfile.yaml) 
