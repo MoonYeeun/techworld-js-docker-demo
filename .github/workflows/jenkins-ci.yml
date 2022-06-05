@@ -33,7 +33,7 @@ jobs:
 
           password=$(yq '.credential.usernamePassword.password // "" ' scmfile.yaml) 
           username=$(yq '.credential.usernamePassword.username // "" ' scmfile.yaml) 
-          url=$(yq '.scm.git.userRemoteConfig.url // "" ' scmfile.yaml) 
+          url=$(yq '.scm.git.userRemoteConfigs.url // "" ' scmfile.yaml) 
           branchName=$(yq '.scm.git.branches // "" ' scmfile.yaml)
 
           if [ -z $password ]
@@ -49,7 +49,7 @@ jobs:
 
           if [ -z $url ]
           then 
-            yq -i '.scm.git.userRemoteConfig.url = "${{ github.repositoryUrl }}"' scmfile.yaml
+            yq -i '.scm.git.userRemoteConfigs.url = "${{ github.repositoryUrl }}"' scmfile.yaml
           fi
 
           if [ -z $branchName ]
