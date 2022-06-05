@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [master]
+    branches: [master, feature/test]
   pull_request:
-    branches: [master]
+    branches: [master, feature/test]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,26 +33,26 @@ jobs:
 
           password=$(yq '.credential.usernamePassword.password // "" ' scmfile.yaml) 
           username=$(yq '.credential.usernamePassword.username // "" ' scmfile.yaml) 
-          url=$(yq '.scm.git.userRemoteConfig.url // "" ' scmfile.yaml) 
-          branchName=$(yq '.scm.git.branches.url // "" ' scmfile.yaml)
+          url=$(yq '.scm.git.userRemoteConfigs.url // "" ' scmfile.yaml) 
+          branchName=$(yq '.scm.git.branches // "" ' scmfile.yaml)
 
-          if [ "$password" != "${{ secrets.GITHUB_TOKEN }}" ]
+          if [ -z $password ]
           then
             yq -i '.credential.usernamePassword.password = "${{ secrets.GITHUB_TOKEN }}"' scmfile.yaml
           fi
 
-          if [ "$username" != "${{ github.actor }}" ]
+          if [ -z $username ]
           then 
             yq -i '.credential.usernamePassword.username = "${{ github.actor }}"' scmfile.yaml
             
           fi
 
-          if [ "$url" != "${{ github.repositoryUrl }}" ]
+          if [ -z $url ]
           then 
-            yq -i '.scm.git.userRemoteConfig.url = "${{ github.repositoryUrl }}"' scmfile.yaml
+            yq -i '.scm.git.userRemoteConfigs.url = "${{ github.repositoryUrl }}"' scmfile.yaml
           fi
 
-          if [ "$branchName" != "${{ github.ref_name }}" ]
+          if [ -z $branchName ]
           then 
             yq -i '.scm.git.branches = "${{ github.ref_name }}"' scmfile.yaml
           fi
@@ -69,9 +69,9 @@ jobs:
       #     scm.git.branches.name: ${{ github.ref_name }}
 
       # Runs a set of commands using the runners shell
-      - name: custom runner github action
-        uses: inspirit941/jenkinsfile-runner-github-actions/jenkinsfile-runner-prepackaged@master
-        with:
-          jenkinsfile: Jenkinsfile
-          plugins: plugins.txt
-          scmfile: scmfile.yaml
+      # - name: custom runner github action
+      #   uses: inspirit941/jenkinsfile-runner-github-actions/jenkinsfile-runner-prepackaged@master
+      #   with:
+      #     jenkinsfile: Jenkinsfile
+      #     plugins: plugins.txt
+      #     scmfile: scmfile.yaml
