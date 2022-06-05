@@ -34,9 +34,7 @@ jobs:
           password=$(yq '.credential.usernamePassword.password // "" ' scmfile.yaml) 
           username=$(yq '.credential.usernamePassword.username // "" ' scmfile.yaml) 
           url=$(yq '.scm.git.userRemoteConfig.url // "" ' scmfile.yaml) 
-
-          echo $branches
-          echo $password
+          branchName=$(yq '.scm.git.branches.url // "" ' scmfile.yaml)
 
           if [ "$password" != "${{ secrets.GITHUB_TOKEN }}" ]
           then
@@ -54,9 +52,9 @@ jobs:
             yq -i '.scm.git.userRemoteConfig.url = "${{ github.repositoryUrl }}"' scmfile.yaml
           fi
 
-          if [ $branchName = "null" ]
+          if [ "$branchName" != "${{ github.ref_name }}" ]
           then 
-            echo scm.git.branches.name=${{ github.ref_name }} >> scmfile.yaml
+            yq -i '.scm.git.branches.url = "${{ github.repositoryUrl }}"' scmfile.yaml
           fi
           cat scmfile.yaml
 
