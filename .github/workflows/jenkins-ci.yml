@@ -19,6 +19,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     # branches=$(yq '.scm.git.branches.name.[]' scmfile.yaml)
+    #  echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -40,7 +41,7 @@ jobs:
           if [ $password = "" ]
           then
             yq --null-input '.credential.usernamePassword.password = ${{ secrets.GITHUB_TOKEN }}' scmfile.yaml
-            echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
+           
           fi
 
           if [ $username = "" ]
