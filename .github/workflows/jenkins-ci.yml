@@ -38,7 +38,7 @@ jobs:
           echo $branches
           echo $password
 
-          if [ $password = "" ]
+          if [ $password == "" ]
           then
             yq --null-input '.credential.usernamePassword.password = ${{ secrets.GITHUB_TOKEN }}' scmfile.yaml
            
