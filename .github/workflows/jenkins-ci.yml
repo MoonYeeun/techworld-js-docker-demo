@@ -18,6 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
+    # branches=$(yq '.scm.git.branches.name.[]' scmfile.yaml)
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -32,7 +33,6 @@ jobs:
           password=$(yq '.credential.usernamePassword.password // "" ' scmfile.yaml) 
           username=$(yq '.credential.usernamePassword.username // "" ' scmfile.yaml) 
           url=$(yq '.scm.git.userRemoteConfig.url // "" ' scmfile.yaml) 
-          branches=$(yq '.scm.git.branches.name.[]' scmfile.yaml)
 
           echo $branches
           echo $password
