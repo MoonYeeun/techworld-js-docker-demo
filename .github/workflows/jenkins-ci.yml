@@ -28,9 +28,8 @@ jobs:
       - name: Create scmfile.yaml
         run: |
           touch scmfile.yaml
-          test=$(shyaml get-value credential.usernamePassword.password)
-          echo $test 
-
+          test=$(yq r scmfile.yaml credential.usernamePassword.password)
+          echo test
           password=$(yq '.credential.usernamePassword.password' scmfile.yaml) 
           username=$(yq '.credential.usernamePassword.username' scmfile.yaml) 
           url=$(yq '.scm.git.userRemoteConfig.url' scmfile.yaml) 
