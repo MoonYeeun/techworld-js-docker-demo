@@ -54,7 +54,7 @@ jobs:
 
           if [ "$branchName" != "${{ github.ref_name }}" ]
           then 
-            yq -i '.scm.git.branches.url = "${{ github.repositoryUrl }}"' scmfile.yaml
+            yq -i '.scm.git.branches = "${{ github.ref_name }}"' scmfile.yaml
           fi
           cat scmfile.yaml
 
