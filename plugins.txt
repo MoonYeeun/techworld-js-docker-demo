@@ -4,3 +4,4 @@ pipeline-model-definition:latest
 credentials:latest
 configuration-as-code:latest
 workflow-cps:latest
+groovy:latest
