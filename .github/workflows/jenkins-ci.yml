@@ -38,20 +38,20 @@ jobs:
           echo $branches
           echo $password
 
-          if [ "$password" == "" ]
+          if [ "$password" != "${{ secrets.GITHUB_TOKEN }}" ]
           then
-            yq '.credential.usernamePassword.password = "${{ secrets.GITHUB_TOKEN }}"' scmfile.yaml
-           
+            yq -i '.credential.usernamePassword.password = "${{ secrets.GITHUB_TOKEN }}"' scmfile.yaml
           fi
 
-          if [ $username = "" ]
+          if [ "$username" != "${{ github.actor }}" ]
           then 
-            echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
+            yq -i '.credential.usernamePassword.username = "${{ github.actor }}"' scmfile.yaml
+            
           fi
 
-          if [ $url = "" ]
+          if [ "$url" != "${{ github.repositoryUrl }}" ]
           then 
-            echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
+            yq -i '.scm.git.userRemoteConfig.url = "${{ github.repositoryUrl }}"' scmfile.yaml
           fi
 
           if [ $branchName = "null" ]
