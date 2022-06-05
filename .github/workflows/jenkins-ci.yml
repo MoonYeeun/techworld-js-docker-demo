@@ -67,9 +67,9 @@ jobs:
       #     scm.git.branches.name: ${{ github.ref_name }}
 
       # Runs a set of commands using the runners shell
-      - name: custom runnger github action
-        uses: inspirit941/jenkinsfile-runner-github-actions/jenkinsfile-runner-prepackaged@master
-        with:
-          jenkinsfile: ../../Jenkinsfile
-          plugins: ../../plugins.txt
-          scmfile: ./scmfile.yaml
+      # - name: custom runner github action
+      #   uses: inspirit941/jenkinsfile-runner-github-actions/jenkinsfile-runner-prepackaged@master
+      #   with:
+      #     jenkinsfile: Jenkinsfile
+      #     plugins: plugins.txt
+      #     scmfile: scmfile.yaml
