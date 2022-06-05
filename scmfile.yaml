@@ -8,5 +8,4 @@ scm:
   git:
     userRemoteConfigs:
       url: https://github.com/jenkinsci/jenkinsfile-runner.git
-      credentialsId: credentials
     branches: master
