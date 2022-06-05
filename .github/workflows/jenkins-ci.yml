@@ -28,24 +28,27 @@ jobs:
       - name: Create scmfile.yaml
         run: |
           touch scmfile.yaml
-          test=$(cat scmfile.yaml | yq -r credential.usernamePassword.password)
-          echo $test
-          password=$(yq '.credential.usernamePassword.password' scmfile.yaml) 
-          username=$(yq '.credential.usernamePassword.username' scmfile.yaml) 
-          url=$(yq '.scm.git.userRemoteConfig.url' scmfile.yaml) 
-          yq '.scm.git.branches.name[0]' scmfile.yaml
 
-          if [ $password = "null" ]
+          password=$(yq '.credential.usernamePassword.password // "" ' scmfile.yaml) 
+          username=$(yq '.credential.usernamePassword.username // "" ' scmfile.yaml) 
+          url=$(yq '.scm.git.userRemoteConfig.url // "" ' scmfile.yaml) 
+          branches=$(yq '.scm.git.branches.name.[]' scmfile.yaml)
+
+          echo $branches
+          echo $password
+
+          if [ $password = "" ]
           then
+            yq --null-input '.credential.usernamePassword.password = ${{ secrets.GITHUB_TOKEN }}' scmfile.yaml
             echo credential.usernamePassword.password=${{ secrets.GITHUB_TOKEN }} >> scmfile.yaml
           fi
 
-          if [ $username = "null" ]
+          if [ $username = "" ]
           then 
             echo credential.usernamePassword.username=${{ github.actor }} >> scmfile.yaml
           fi
 
-          if [ $url = "null" ]
+          if [ $url = "" ]
           then 
             echo scm.git.userRemoteConfig.url=${{ github.repositoryUrl }} >> scmfile.yaml
           fi
